@@ -1,4 +1,5 @@
 import "./ModalWithForm.css";
+import closeIcon from "../../images/exit.png";
 
 function ModalWithForm({ children, buttonText, title, activeModal, onClose }) {
   const isOpen = activeModal === "add-garment";
@@ -12,7 +13,11 @@ function ModalWithForm({ children, buttonText, title, activeModal, onClose }) {
       <div className="modal__content">
         <h2 className="modal__title">{title}</h2>
         <button type="button" className="modal__close" onClick={onClose}>
-          CLOSE
+          <img
+            src={closeIcon}
+            alt="Close modal"
+            className="modal__close-icon"
+          />
         </button>
 
         <form className="modal__form">
