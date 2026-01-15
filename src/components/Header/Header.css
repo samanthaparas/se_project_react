@@ -25,6 +25,7 @@
   font-weight: 700;
   line-height: 100%;
   color: #000000;
+  cursor: pointer;
 }
 
 .header__user-container {
