@@ -1,8 +1,15 @@
+.weather {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
 .cards__text {
   font-size: 20px;
   font-weight: 700;
   line-height: 100%;
   color: #000000;
+  margin: 0 0 34px;
 }
 
 .cards__list {
@@ -11,6 +18,7 @@
   margin: 0;
 
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, 325px);
+  justify-content: start;
   gap: 20px;
 }
