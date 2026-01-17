@@ -1,8 +1,11 @@
-# React + Vite
+# WTWR
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+WTWR is a React app that shows current weather and suggests clothes. It fetches weather data on load, filters preset items, and opens a preview modal when you click a card. A form modal is included for adding garments (UI only).
 
-Currently, two official plugins are available:
+## Tech
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React
+- Vite
+- CSS (BEM)
+
+[WTWR on GitHub](https://github.com/samanthaparas/se_project_react)
