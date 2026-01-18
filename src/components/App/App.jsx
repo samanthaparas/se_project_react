@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import {
   coordinates,
-  APIkey,
+  apiKey,
   defaultClothingItems,
 } from "../../utils/constants";
 import Header from "../Header/Header";
@@ -34,7 +34,7 @@ function App() {
   const closeActiveModal = () => setActiveModal("");
 
   useEffect(() => {
-    getWeather(coordinates, APIkey)
+    getWeather(coordinates, apiKey)
       .then((data) => {
         const filteredData = filterWeatherData(data);
         setWeatherData(filteredData);
