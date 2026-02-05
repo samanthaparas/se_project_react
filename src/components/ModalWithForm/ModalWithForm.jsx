@@ -2,14 +2,13 @@ import "./ModalWithForm.css";
 import closeIcon from "../../images/exit.png";
 
 function ModalWithForm({
-  children,
-  buttonText,
   title,
   name,
-  isOpen,
+  buttonText = "Save",
   onClose,
+  isOpen,
+  children,
 }) {
-
   return (
     <div
       className={`modal modal_type_${name} ${isOpen ? "modal__opened" : ""}`}
