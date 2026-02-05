@@ -37,6 +37,21 @@ function App() {
     setActiveModal("add-garment");
   };
 
+  const onAddItem = (inputValues) => {
+    // call the fetch function
+    // .then((data) => {})... includes all the stuff below
+    const newCardData = {
+      name: inputValues.name,
+      link: inputValues.link,
+      weather: inputValues.weather,
+    };
+    //don't use newCardData
+    //ID will be included in the response data
+    setClothingItems([...clothingItems, inputValues]);
+    closeActiveModal();
+    // .catch()
+  };
+
   const closeActiveModal = () => setActiveModal("");
 
   useEffect(() => {
@@ -62,17 +77,12 @@ function App() {
           />
           <Footer />
         </div>
-        {/*         <ModalWithForm
-          title="New garment"
-          buttonText="Add garment"
-          onClose={closeActiveModal}
-          name="add-garment"
-          isOpen={activeModal === "add-garment"}
-        ></ModalWithForm> */}
+        {}
         <AddItemModal
           buttonText="Add garment"
           onClose={closeActiveModal}
           isOpen={activeModal === "add-garment"}
+          onAddItem={onAddItem}
         />
         <ItemModal
           activeModal={activeModal}
