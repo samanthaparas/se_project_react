@@ -2,8 +2,22 @@
   flex-grow: 1;
 }
 
+.clothes-section__btn {
+  margin: 0;
+  border: hidden;
+  background-color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 100%;
+  color: #000000;
+  cursor: pointer;
+}
+
 .clothes-section__row {
   display: flex;
+  font-size: 20px;
+  line-height: 100%;
+  /* padding: 16px; */
 }
 
 .clothes-section__items {
