@@ -41,7 +41,7 @@ Demo video link here:
 ## Links
 
 - GitHub repository: [se_project_react](https://github.com/samanthaparas/se_project_react)
-- GitHub Pages (optional): [Live app](https://your-github-pages-link-here.com)
+- GitHub Pages: [Live app](https://your-github-pages-link-here.com)
 
 ## Running the Project Locally
 

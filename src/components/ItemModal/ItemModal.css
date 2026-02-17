@@ -54,10 +54,11 @@
 }
 
 .modal__delete {
-  margin-top: 0 /*12px*/;
+  margin-top: 0;
   border: none;
   padding: 0;
   background: transparent;
   color: #ff4d4f;
+  font-weight: 700;
   cursor: pointer;
 }
