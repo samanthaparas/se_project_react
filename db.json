@@ -18,12 +18,6 @@
   },
   "items": [
     {
-      "name": "Dress",
-      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Dress.png?etag=1f9cd32a311ab139cab43494883720bf",
-      "weather": "warm",
-      "_id": 4
-    },
-    {
       "name": "Boot",
       "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Boot.png?etag=0953a2ea59f1c6ebc832fabacdc9c70e",
       "weather": "cold",
