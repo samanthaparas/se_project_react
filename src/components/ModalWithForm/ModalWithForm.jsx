@@ -4,11 +4,12 @@ import closeIcon from "../../images/exit.png";
 function ModalWithForm({
   title,
   name,
-  buttonText = "Save",
+  buttonText = "Add garment",
   onClose,
   isOpen,
   children,
   onSubmit,
+  isSubmitDisabled = false,
 }) {
   return (
     <div
@@ -26,7 +27,11 @@ function ModalWithForm({
 
         <form onSubmit={onSubmit} className="modal__form" name={name}>
           {children}
-          <button type="submit" className="modal__submit">
+          <button
+            type="submit"
+            className="modal__submit"
+            disabled={isSubmitDisabled}
+          >
             {buttonText}
           </button>
         </form>

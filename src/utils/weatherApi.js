@@ -18,7 +18,7 @@ export const filterWeatherData = (data) => {
     C: Math.round(((data.main.temp - 32) * 5) / 9),
   };
   result.type = getWeatherType(result.temp.F);
-  result.condition = data.weather[0].main.toLowerCase();
+  result.condition = normalizeCondition(data.weather[0].main);
   result.isDay = isDay(data.sys, Date.now());
   return result;
 };
@@ -35,4 +35,31 @@ const getWeatherType = (temperature) => {
   } else {
     return "cold";
   }
+};
+
+const normalizeCondition = (main) => {
+  const value = main.toLowerCase();
+
+  if (value === "clear") return "clear";
+  if (value === "clouds") return "cloudy";
+  if (value === "rain" || value === "drizzle") return "rain";
+  if (value === "thunderstorm") return "storm";
+  if (value === "snow") return "snow";
+  if (
+    [
+      "mist",
+      "smoke",
+      "haze",
+      "dust",
+      "fog",
+      "sand",
+      "ash",
+      "squall",
+      "tornado",
+    ].includes(value)
+  ) {
+    return "fog";
+  }
+
+  return "clear";
 };

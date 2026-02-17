@@ -6,10 +6,7 @@
   margin: 0;
   border: hidden;
   background-color: #fff;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 100%;
-  color: #000000;
+
   cursor: pointer;
 }
 
@@ -17,7 +14,11 @@
   display: flex;
   font-size: 20px;
   line-height: 100%;
-  /* padding: 16px; */
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 100%;
+  color: #000000;
 }
 
 .clothes-section__items {

@@ -42,7 +42,7 @@
   background-color: #fff;
   position: relative;
   padding: 28px 28px 36px;
-  max-width: 670px;
+  max-width: 496px;
   box-sizing: border-box;
   width: 100%;
   border-radius: 20px;
@@ -106,4 +106,9 @@
   color: #ffffff;
   background-color: black;
   cursor: pointer;
+}
+
+.modal__submit:disabled {
+  background-color: #bdbdbd;
+  cursor: not-allowed;
 }
