@@ -26,8 +26,6 @@ WTWR is a weather-based clothing app built with React. It displays the current w
 
 ## Screenshots
 
-Add screenshots/GIFs here to show key features.
-
 ![Main page weather and clothing cards](./screenshots/main-page.png)
 ![Add garment modal](./screenshots/add-garment-modal.png)
 ![Profile page](./screenshots/profile-page.png)
@@ -36,7 +34,7 @@ Add screenshots/GIFs here to show key features.
 
 ## Demo Video
 
-Add your demo video link here:
+Demo video link here:
 
 - [Project demo video](https://your-demo-link-here.com)
 
