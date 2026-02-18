@@ -48,4 +48,4 @@ WTWR is a weather-based clothing app built with React. It displays the current w
 2. Start the frontend:
    `npm run dev`
 3. Start JSON server (if configured in your environment) to serve `db.json`:
-   `npx json-server --watch db.json --port 3001`
+   `npx json-server --watch db.json --port 3001 --id _id`
