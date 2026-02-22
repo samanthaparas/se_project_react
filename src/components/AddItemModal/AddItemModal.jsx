@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useForm } from "../../hooks/useForm";
+import useFormWithValidation from "../../hooks/useFormWithValidation";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
 const defaultValues = {
@@ -9,20 +9,23 @@ const defaultValues = {
 };
 
 const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
-  const { values, setValues, handleChange } = useForm(defaultValues);
+  const { values, setValues, handleChange, errors, isValid, resetForm } =
+    useFormWithValidation(defaultValues);
 
   useEffect(() => {
     if (!isOpen) {
-      setValues(defaultValues);
+      resetForm(defaultValues, {}, false);
     }
-  }, [isOpen, setValues]);
+  }, [isOpen, resetForm]);
 
   function handleSubmit(evt) {
     evt.preventDefault();
+    if (!isValid) return;
     onAddItem(values);
+    resetForm(defaultValues, {}, false);
   }
 
-  const isFormValid = values.name && values.imageUrl && values.weather;
+  const isFormValid = isValid;
 
   return (
     <ModalWithForm
@@ -47,6 +50,7 @@ const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
           value={values.name}
           onChange={handleChange}
         />
+        <span className="modal__input-error">{errors.name}</span>
       </label>
       <label htmlFor="imageUrl" className="modal__label">
         Image{" "}
@@ -60,6 +64,7 @@ const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
           value={values.imageUrl}
           onChange={handleChange}
         />
+        <span className="modal__input-error">{errors.imageUrl}</span>
       </label>
       <fieldset className="modal__radio-buttons">
         <legend className="modal__legend">Select the weather type:</legend>
@@ -72,6 +77,7 @@ const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
             value="hot"
             checked={values.weather === "hot"}
             onChange={handleChange}
+            required
           />{" "}
           Hot
         </label>
@@ -99,6 +105,7 @@ const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
           />{" "}
           Cold
         </label>
+        <span className="modal__input-error">{errors.weather}</span>
       </fieldset>
     </ModalWithForm>
   );
