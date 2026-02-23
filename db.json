@@ -64,12 +64,6 @@
       "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Skirt.png?etag=27a6bea7e1b63218820d615876fa31d1",
       "weather": "hot",
       "_id": 12
-    },
-    {
-      "name": "a",
-      "imageUrl": "https://www.google.com",
-      "weather": "warm",
-      "_id": 13
     }
   ]
 }

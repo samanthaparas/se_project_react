@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import {
-  coordinates,
-  apiKey,
-  // defaultClothingItems,
-} from "../../utils/constants";
+import { apiKey, getDefaultCoordinates } from "../../utils/constants";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import ItemModal from "../ItemModal/ItemModal";
@@ -16,6 +12,7 @@ import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnit
 import AddItemModal from "../AddItemModal/AddItemModal";
 import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
 import { addItem, deleteItem, getItems } from "../../utils/api";
+import useGeolocation from "../../hooks/useGeolocation";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -74,8 +71,15 @@ function App() {
 
   const closeActiveModal = () => setActiveModal("");
 
+  const { coordinates, error, isLoading } = useGeolocation();
+  const activeCoordinates = coordinates || getDefaultCoordinates();
+
   useEffect(() => {
-    getWeather(coordinates, apiKey)
+    if (isLoading) {
+      return;
+    }
+
+    getWeather(activeCoordinates, apiKey)
       .then((data) => {
         const filteredData = filterWeatherData(data);
         setWeatherData(filteredData);
@@ -93,7 +97,7 @@ function App() {
         setClothingItems(normalizedItems);
       })
       .catch(console.error);
-  }, []);
+  }, [isLoading]);
 
   return (
     <CurrentTemperatureUnitContext.Provider
