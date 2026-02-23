@@ -9,23 +9,26 @@ const defaultValues = {
 };
 
 const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
-  const { values, setValues, handleChange, errors, isValid, resetForm } =
-    useFormWithValidation(defaultValues);
+  const {
+    values,
+    handleChange,
+    errors,
+    isValid,
+    resetForm,
+    handleSubmit,
+    hasSubmitted,
+  } = useFormWithValidation(defaultValues);
 
   useEffect(() => {
     if (!isOpen) {
-      resetForm(defaultValues, {}, false);
+      resetForm(defaultValues, {}, true);
     }
   }, [isOpen, resetForm]);
 
-  function handleSubmit(evt) {
-    evt.preventDefault();
-    if (!isValid) return;
+  const onSubmit = handleSubmit(() => {
     onAddItem(values);
-    resetForm(defaultValues, {}, false);
-  }
-
-  const isFormValid = isValid;
+    resetForm(defaultValues, {}, true);
+  });
 
   return (
     <ModalWithForm
@@ -33,20 +36,19 @@ const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
       name="add-garment"
       isOpen={isOpen}
       onClose={onClose}
-      onSubmit={handleSubmit}
-      isSubmitDisabled={!isFormValid}
+      onSubmit={onSubmit}
+      isSubmitDisabled={hasSubmitted && !isValid}
     >
       <label htmlFor="name" className="modal__label">
         Name{" "}
         <input
           type="text"
-          className="modal__input"
+          className={`modal__input ${
+            hasSubmitted && errors.name ? "modal__input_type_invalid" : ""
+          }`}
           id="name"
           name="name"
           placeholder="Name"
-          required
-          minLength="1"
-          maxLength="30"
           value={values.name}
           onChange={handleChange}
         />
@@ -56,17 +58,22 @@ const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
         Image{" "}
         <input
           type="url"
-          className="modal__input"
+          className={`modal__input ${
+            hasSubmitted && errors.imageUrl ? "modal__input_type_invalid" : ""
+          }`}
           id="imageUrl"
           name="imageUrl"
           placeholder="Image URL"
-          required
           value={values.imageUrl}
           onChange={handleChange}
         />
         <span className="modal__input-error">{errors.imageUrl}</span>
       </label>
-      <fieldset className="modal__radio-buttons">
+      <fieldset
+        className={`modal__radio-buttons ${
+          hasSubmitted && errors.weather ? "modal__radio-buttons_type_invalid" : ""
+        }`}
+      >
         <legend className="modal__legend">Select the weather type:</legend>
         <label htmlFor="hot" className="modal__label modal__label_type_radio">
           <input
@@ -77,7 +84,6 @@ const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
             value="hot"
             checked={values.weather === "hot"}
             onChange={handleChange}
-            required
           />{" "}
           Hot
         </label>
