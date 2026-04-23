@@ -11,8 +11,9 @@ import Footer from "../Footer/Footer";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
-import { addItem, deleteItem, getItems } from "../../utils/api";
+import { addItem, deleteItem } from "../../utils/api";
 import useGeolocation from "../../hooks/useGeolocation";
+import data from "../../../db.json";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -20,7 +21,9 @@ function App() {
     temp: { F: 999 },
     city: "",
   });
-  const [clothingItems, setClothingItems] = useState([]);
+  const [clothingItems, setClothingItems] = useState(data.items);
+console.log("clothingItems:", clothingItems);
+
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
@@ -86,17 +89,17 @@ function App() {
       })
       .catch(console.error);
 
-    getItems()
-      .then((data) => {
-        const normalizedItems = data
-          .map((item) => ({
-            ...item,
-            imageUrl: item.imageUrl ?? item.link,
-          }))
-          .reverse();
-        setClothingItems(normalizedItems);
-      })
-      .catch(console.error);
+    // getItems()
+    //   .then((data) => {
+    //     const normalizedItems = data
+    //       .map((item) => ({
+    //         ...item,
+    //         imageUrl: item.imageUrl ?? item.link,
+    //       }))
+    //       .reverse();
+    //     setClothingItems(normalizedItems);
+    //   })
+    //   .catch(console.error);
   }, [isLoading]);
 
   return (
