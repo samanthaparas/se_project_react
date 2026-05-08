@@ -12,12 +12,18 @@ export const getItems = () =>
 export const addItem = ({ name, imageUrl, weather }) =>
   fetch(`${baseUrl}/items`, {
     method: "POST",
-    headers,
+    headers: {
+      ...headers,
+      authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify({ name, imageUrl, weather }),
   }).then(checkResponse);
 
 export const deleteItem = (id) =>
   fetch(`${baseUrl}/items/${id}`, {
     method: "DELETE",
-    headers,
+    headers: {
+      ...headers,
+      authorization: `Bearer ${token}`,
+    },
   }).then(checkResponse);

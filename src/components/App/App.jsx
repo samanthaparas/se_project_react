@@ -22,7 +22,7 @@ function App() {
     city: "",
   });
   const [clothingItems, setClothingItems] = useState(data.items);
-console.log("clothingItems:", clothingItems);
+// console.log("clothingItems:", clothingItems);
 
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
