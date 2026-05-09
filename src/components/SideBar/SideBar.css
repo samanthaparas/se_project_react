@@ -7,14 +7,26 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  padding-bottom: 40px;
 }
 
-.sidebar__avatar {
-  width: 40px;
-  height: 40px;
+.sidebar__avatar,
+.sidebar__avatar-placeholder {
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
+}
+
+.sidebar__avatar-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+  color: #fff;
+  font-size: 24px;
+  font-weight: 700;
 }
 
 .sidebar__username {
@@ -22,4 +34,24 @@
   font-weight: 700;
   line-height: 100%;
   margin: 0;
+}
+
+.sidebar__edit-profile,
+.sidebar__sign-out {
+  display: block;
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  color: #000;
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 100%;
+  cursor: pointer;
+  text-align: left;
+}
+
+.sidebar__edit-profile {
+  margin-bottom: 8px;
 }
