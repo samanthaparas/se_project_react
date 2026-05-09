@@ -1,6 +1,12 @@
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import { signup, signin, checkToken } from "../../utils/auth";
-import { getItems, addItem, deleteItem } from "../../utils/api";
+import EditProfileModal from "../EditProfileModal/EditProfileModal";
+import {
+  getItems,
+  addItem,
+  deleteItem,
+  updateUserProfile,
+} from "../../utils/api";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
@@ -141,6 +147,21 @@ function App() {
       });
   }, []);
 
+  const handleEditProfileClick = () => {
+    setActiveModal("edit-profile");
+  };
+
+  const handleUpdateProfile = (values) => {
+    const token = localStorage.getItem("jwt");
+
+    updateUserProfile(values, token)
+      .then((updatedUser) => {
+        setCurrentUser(updatedUser);
+        closeActiveModal();
+      })
+      .catch(console.error);
+  };
+
   useEffect(() => {
     if (isLoading) {
       return;
@@ -187,6 +208,7 @@ function App() {
                       handleCardClick={handleCardClick}
                       clothingItems={clothingItems}
                       onAddClick={handleAddClick}
+                      onEditProfileClick={handleEditProfileClick}
                     />
                   </ProtectedRoute>
                 }
@@ -225,6 +247,11 @@ function App() {
             isOpen={activeModal === "confirm-delete"}
             onClose={closeActiveModal}
             onDelete={handleDeleteItem}
+          />
+          <EditProfileModal
+            isOpen={activeModal === "edit-profile"}
+            onClose={closeActiveModal}
+            onUpdateProfile={handleUpdateProfile}
           />
         </div>
       </CurrentTemperatureUnitContext.Provider>

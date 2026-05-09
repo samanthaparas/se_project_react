@@ -27,3 +27,13 @@ export const deleteItem = (id, token) =>
       authorization: `Bearer ${token}`,
     },
   }).then(checkResponse);
+
+export const updateUserProfile = ({ name, avatar }, token) =>
+  fetch(`${baseUrl}/users/me`, {
+    method: "PATCH",
+    headers: {
+      ...headers,
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ name, avatar }),
+  }).then(checkResponse);
