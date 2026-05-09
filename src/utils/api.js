@@ -37,3 +37,21 @@ export const updateUserProfile = ({ name, avatar }, token) =>
     },
     body: JSON.stringify({ name, avatar }),
   }).then(checkResponse);
+
+export const addCardLike = (id, token) =>
+  fetch(`${baseUrl}/items/${id}/likes`, {
+    method: "PUT",
+    headers: {
+      ...headers,
+      authorization: `Bearer ${token}`,
+    },
+  }).then(checkResponse);
+
+export const removeCardLike = (id, token) =>
+  fetch(`${baseUrl}/items/${id}/likes`, {
+    method: "DELETE",
+    headers: {
+      ...headers,
+      authorization: `Bearer ${token}`,
+    },
+  }).then(checkResponse);

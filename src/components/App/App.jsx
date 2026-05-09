@@ -6,13 +6,15 @@ import {
   addItem,
   deleteItem,
   updateUserProfile,
+  addCardLike,
+  removeCardLike,
 } from "../../utils/api";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
 import { apiKey, getDefaultCoordinates } from "../../utils/constants";
 import Header from "../Header/Header";
@@ -40,6 +42,8 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
 
+  const navigate = useNavigate();
+
   const handleRegister = ({ name, avatar, email, password }) => {
     signup({ name, avatar, email, password })
       .then(() => {
@@ -60,6 +64,9 @@ function App() {
         setCurrentUser(userData);
       })
       .catch(console.error);
+    localStorage.removeItem("jwt");
+    setIsLoggedIn(false);
+    setCurrentUser(null);
   };
 
   const handleToggleSwitchChange = () => {
@@ -117,6 +124,25 @@ function App() {
       .catch(console.error);
   };
 
+  const handleCardLike = ({ id, _id, isLiked }) => {
+    const token = localStorage.getItem("jwt");
+    const itemId = _id ?? id;
+
+    const likeRequest = isLiked
+      ? removeCardLike(itemId, token)
+      : addCardLike(itemId, token);
+
+    likeRequest
+      .then((updatedCard) => {
+        setClothingItems((cards) =>
+          cards.map((item) =>
+            (item._id ?? item.id) === itemId ? updatedCard : item,
+          ),
+        );
+      })
+      .catch(console.error);
+  };
+
   const closeActiveModal = () => setActiveModal("");
 
   const { coordinates, error, isLoading } = useGeolocation();
@@ -162,6 +188,13 @@ function App() {
       .catch(console.error);
   };
 
+  const handleSignOut = () => {
+    localStorage.removeItem("jwt");
+    setIsLoggedIn(false);
+    setCurrentUser(null);
+    navigate("/");
+  };
+
   useEffect(() => {
     if (isLoading) {
       return;
@@ -197,6 +230,7 @@ function App() {
                     weatherData={weatherData}
                     handleCardClick={handleCardClick}
                     clothingItems={clothingItems}
+                    onCardLike={handleCardLike}
                   />
                 }
               />
@@ -209,6 +243,8 @@ function App() {
                       clothingItems={clothingItems}
                       onAddClick={handleAddClick}
                       onEditProfileClick={handleEditProfileClick}
+                      onCardLike={handleCardLike}
+                      onSignOut={handleSignOut}
                     />
                   </ProtectedRoute>
                 }

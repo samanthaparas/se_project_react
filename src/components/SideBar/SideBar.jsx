@@ -3,7 +3,7 @@ import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./SideBar.css";
 // import avatar from "../../images/avatar.png";
 
-export default function SideBar({ onEditProfileClick }) {
+export default function SideBar({ onEditProfileClick, onSignOut }) {
   const currentUser = useContext(CurrentUserContext);
   const userInitial = currentUser?.name?.[0]?.toUpperCase();
 
@@ -29,6 +29,10 @@ export default function SideBar({ onEditProfileClick }) {
         onClick={onEditProfileClick}
       >
         Edit profile
+      </button>
+
+      <button type="button" className="sidebar__sign-out" onClick={onSignOut}>
+        Sign out
       </button>
     </aside>
   );

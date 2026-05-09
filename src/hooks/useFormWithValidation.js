@@ -7,6 +7,7 @@ const validationRules = {
     if (value.length > 30) return "Name must be no more than 30 characters";
     return "";
   },
+
   imageUrl: (value) => {
     if (!value.trim()) return "Image URL is required";
     try {
@@ -16,9 +17,30 @@ const validationRules = {
       return "Please enter a valid URL";
     }
   },
+
   weather: (value) => {
     if (!value) return "Please select a weather type";
     return "";
+  },
+
+  email: (value) => {
+    if (!value.trim()) return "Email is required";
+    return "";
+  },
+
+  password: (value) => {
+    if (!value.trim()) return "Password is required";
+    return "";
+  },
+
+  avatar: (value) => {
+    if (!value.trim()) return "Avatar URL is required";
+    try {
+      new URL(value);
+      return "";
+    } catch {
+      return "Please enter a valid URL";
+    }
   },
 };
 
@@ -49,7 +71,7 @@ export function useFormWithValidation(initialValues = {}) {
     const newErrors = {};
     let formIsValid = true;
 
-    Object.keys(validationRules).forEach((fieldName) => {
+    Object.keys(values).forEach((fieldName) => {
       const error = validateField(fieldName, values[fieldName]);
       newErrors[fieldName] = error;
       if (error) formIsValid = false;
@@ -71,7 +93,7 @@ export function useFormWithValidation(initialValues = {}) {
         }
       };
     },
-    [validateForm]
+    [validateForm],
   );
 
   const resetForm = useCallback(
@@ -81,7 +103,7 @@ export function useFormWithValidation(initialValues = {}) {
       setIsValid(newIsValid);
       setHasSubmitted(false);
     },
-    []
+    [],
   );
 
   return {
