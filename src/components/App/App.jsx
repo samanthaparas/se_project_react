@@ -147,7 +147,7 @@ function App() {
 
   const closeActiveModal = () => setActiveModal("");
 
-  const { coordinates, error, isLoading } = useGeolocation();
+  const { coordinates, isLoading } = useGeolocation();
   const activeCoordinates = coordinates || getDefaultCoordinates();
 
   useEffect(() => {
@@ -255,7 +255,7 @@ function App() {
 
             <Footer />
           </div>
-          {}
+
           <AddItemModal
             buttonText="Add garment"
             onClose={closeActiveModal}

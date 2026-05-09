@@ -9,7 +9,7 @@ WTWR is a weather-based clothing app built with React. It displays the current w
 - Supports two routes:
 - `/` for the main weather and recommended clothing view
 - `/profile` for user profile, sidebar, and all saved items
-- Renders clothing items from `db.json` on initial load via API calls
+- Renders clothing items from the Express backend on initial load
 - Allows users to add new garments through a form modal
 - Allows users to preview items and delete them with a confirmation modal
 
@@ -19,7 +19,7 @@ WTWR is a weather-based clothing app built with React. It displays the current w
 - React Router (`/` and `/profile` routes)
 - Context API for global temperature unit state
 - Custom hook: `useForm` for controlled form inputs
-- Fetch API for CRUD requests to local JSON server
+- Fetch API for authenticated CRUD requests to the Express backend
 - OpenWeather API for current weather conditions
 - CSS with BEM naming conventions
 - Reusable modal architecture (`ModalWithForm`, `ItemModal`, `DeleteConfirmationModal`)
@@ -44,9 +44,24 @@ WTWR is a weather-based clothing app built with React. It displays the current w
 
 ## Running the Project Locally
 
+Make sure MongoDB is running before starting the backend.
+
 1. Install dependencies:
-   `npm install`
-2. Start the frontend:
-   `npm run dev`
-3. Start JSON server (if configured in your environment) to serve `db.json`:
-   `npx json-server --watch db.json --port 3001 --id _id`
+   ```bash
+   npm install
+   ```
+2. Start the backend server from the backend repository:
+
+   ```bash
+   npm run dev
+   ```
+
+   The backend should run on `http://localhost:3001`.
+
+3. Start the frontend from this repository:
+
+   ```bash
+   npm run dev
+   ```
+
+   The frontend should run on `http://localhost:3000`.

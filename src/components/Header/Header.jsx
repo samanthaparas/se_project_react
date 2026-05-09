@@ -61,11 +61,19 @@ function Header({
           </>
         ) : (
           <>
-            <button type="button" onClick={handleRegisterClick}>
+            <button
+              type="button"
+              className="header__auth-btn"
+              onClick={handleRegisterClick}
+            >
               Sign up
             </button>
 
-            <button type="button" onClick={handleLoginClick}>
+            <button
+              type="button"
+              className="header__auth-btn"
+              onClick={handleLoginClick}
+            >
               Log in
             </button>
           </>
