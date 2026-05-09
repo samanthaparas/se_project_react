@@ -9,7 +9,7 @@ export const checkResponse = (res) => {
 export const getItems = () =>
   fetch(`${baseUrl}/items`, { headers }).then(checkResponse);
 
-export const addItem = ({ name, imageUrl, weather }) =>
+export const addItem = ({ name, imageUrl, weather }, token) =>
   fetch(`${baseUrl}/items`, {
     method: "POST",
     headers: {
@@ -19,7 +19,7 @@ export const addItem = ({ name, imageUrl, weather }) =>
     body: JSON.stringify({ name, imageUrl, weather }),
   }).then(checkResponse);
 
-export const deleteItem = (id) =>
+export const deleteItem = (id, token) =>
   fetch(`${baseUrl}/items/${id}`, {
     method: "DELETE",
     headers: {

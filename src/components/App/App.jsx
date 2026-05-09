@@ -1,3 +1,9 @@
+import { signup, signin, checkToken } from "../../utils/auth";
+import { getItems, addItem, deleteItem } from "../../utils/api";
+import RegisterModal from "../RegisterModal/RegisterModal";
+import LoginModal from "../LoginModal/LoginModal";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
@@ -11,9 +17,7 @@ import Footer from "../Footer/Footer";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
-import { addItem, deleteItem } from "../../utils/api";
 import useGeolocation from "../../hooks/useGeolocation";
-import data from "../../../db.json";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -21,12 +25,35 @@ function App() {
     temp: { F: 999 },
     city: "",
   });
-  const [clothingItems, setClothingItems] = useState(data.items);
-// console.log("clothingItems:", clothingItems);
+  const [clothingItems, setClothingItems] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
 
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+
+  const handleRegister = ({ name, avatar, email, password }) => {
+    signup({ name, avatar, email, password })
+      .then(() => {
+        return handleLogin({ email, password });
+      })
+      .catch(console.error);
+  };
+
+  const handleLogin = ({ email, password }) => {
+    return signin({ email, password })
+      .then((res) => {
+        localStorage.setItem("jwt", res.token);
+        setIsLoggedIn(true);
+        closeActiveModal();
+        return checkToken(res.token);
+      })
+      .then((userData) => {
+        setCurrentUser(userData);
+      })
+      .catch(console.error);
+  };
 
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
@@ -41,13 +68,23 @@ function App() {
     setActiveModal("add-garment");
   };
 
+  const handleRegisterClick = () => {
+    setActiveModal("register");
+  };
+
+  const handleLoginClick = () => {
+    setActiveModal("login");
+  };
+
   const handleDeleteClick = (card) => {
     setSelectedCard(card);
     setActiveModal("confirm-delete");
   };
 
   const onAddItem = (inputValues) => {
-    addItem(inputValues)
+    const token = localStorage.getItem("jwt");
+
+    addItem(inputValues, token)
       .then((newItem) => {
         setClothingItems([newItem, ...clothingItems]);
         closeActiveModal();
@@ -56,11 +93,12 @@ function App() {
   };
 
   const handleDeleteItem = (item = selectedCard) => {
+    const token = localStorage.getItem("jwt");
     const id = item?._id ?? item?.id;
-    if (!id) {
-      return;
-    }
-    deleteItem(id)
+
+    if (!id) return;
+
+    deleteItem(id, token)
       .then(() => {
         setClothingItems(
           clothingItems.filter(
@@ -78,6 +116,31 @@ function App() {
   const activeCoordinates = coordinates || getDefaultCoordinates();
 
   useEffect(() => {
+    getItems()
+      .then((items) => {
+        setClothingItems(items.reverse());
+      })
+      .catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("jwt");
+
+    if (!token) return;
+
+    checkToken(token)
+      .then((userData) => {
+        setCurrentUser(userData);
+        setIsLoggedIn(true);
+      })
+      .catch(() => {
+        localStorage.removeItem("jwt");
+        setIsLoggedIn(false);
+        setCurrentUser(null);
+      });
+  }, []);
+
+  useEffect(() => {
     if (isLoading) {
       return;
     }
@@ -88,18 +151,6 @@ function App() {
         setWeatherData(filteredData);
       })
       .catch(console.error);
-
-    // getItems()
-    //   .then((data) => {
-    //     const normalizedItems = data
-    //       .map((item) => ({
-    //         ...item,
-    //         imageUrl: item.imageUrl ?? item.link,
-    //       }))
-    //       .reverse();
-    //     setClothingItems(normalizedItems);
-    //   })
-    //   .catch(console.error);
   }, [isLoading]);
 
   return (
@@ -108,7 +159,12 @@ function App() {
     >
       <div className="page">
         <div className="page__content">
-          <Header handleAddClick={handleAddClick} weatherData={weatherData} />
+          <Header
+            handleAddClick={handleAddClick}
+            handleRegisterClick={handleRegisterClick}
+            handleLoginClick={handleLoginClick}
+            weatherData={weatherData}
+          />
           <Routes>
             <Route
               path="/"
@@ -123,11 +179,13 @@ function App() {
             <Route
               path="/profile"
               element={
-                <Profile
-                  handleCardClick={handleCardClick}
-                  clothingItems={clothingItems}
-                  onAddClick={handleAddClick}
-                />
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <Profile
+                    handleCardClick={handleCardClick}
+                    clothingItems={clothingItems}
+                    onAddClick={handleAddClick}
+                  />
+                </ProtectedRoute>
               }
             />
           </Routes>
@@ -141,6 +199,19 @@ function App() {
           isOpen={activeModal === "add-garment"}
           onAddItem={onAddItem}
         />
+
+        <RegisterModal
+          isOpen={activeModal === "register"}
+          onClose={closeActiveModal}
+          onRegister={handleRegister}
+        />
+
+        <LoginModal
+          isOpen={activeModal === "login"}
+          onClose={closeActiveModal}
+          onLogin={handleLogin}
+        />
+
         <ItemModal
           activeModal={activeModal}
           card={selectedCard}

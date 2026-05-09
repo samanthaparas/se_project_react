@@ -3,13 +3,11 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import useFormWithValidation from "../../hooks/useFormWithValidation";
 
 const defaultValues = {
-  name: "",
-  avatar: "",
   email: "",
   password: "",
 };
 
-const RegisterModal = ({ isOpen, onClose, onRegister }) => {
+function LoginModal({ isOpen, onClose, onLogin }) {
   const { values, handleChange, resetForm, handleSubmit } =
     useFormWithValidation(defaultValues);
 
@@ -20,14 +18,14 @@ const RegisterModal = ({ isOpen, onClose, onRegister }) => {
   }, [isOpen, resetForm]);
 
   const onSubmit = handleSubmit(() => {
-    onRegister(values);
+    onLogin(values);
   });
 
   return (
     <ModalWithForm
-      title="Sign up"
-      name="register"
-      buttonText="Sign up"
+      title="Log in"
+      name="login"
+      buttonText="Log in"
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={onSubmit}
@@ -55,32 +53,8 @@ const RegisterModal = ({ isOpen, onClose, onRegister }) => {
           required
         />
       </label>
-
-      <label className="modal__label">
-        Name
-        <input
-          className="modal__input"
-          type="text"
-          name="name"
-          value={values.name}
-          onChange={handleChange}
-          required
-        />
-      </label>
-
-      <label className="modal__label">
-        Avatar URL
-        <input
-          className="modal__input"
-          type="url"
-          name="avatar"
-          value={values.avatar}
-          onChange={handleChange}
-          required
-        />
-      </label>
     </ModalWithForm>
   );
-};
+}
 
-export default RegisterModal;
+export default LoginModal;
