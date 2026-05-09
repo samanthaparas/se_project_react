@@ -63,10 +63,12 @@ function App() {
       .then((userData) => {
         setCurrentUser(userData);
       })
-      .catch(console.error);
-    localStorage.removeItem("jwt");
-    setIsLoggedIn(false);
-    setCurrentUser(null);
+      .catch((err) => {
+        console.error(err);
+        localStorage.removeItem("jwt");
+        setIsLoggedIn(false);
+        setCurrentUser(null);
+      });
   };
 
   const handleToggleSwitchChange = () => {

@@ -37,9 +37,10 @@ WTWR is a weather-based clothing app built with React. It displays the current w
 - Check out [Samantha's WTWR Project Pitch](https://drive.google.com/file/d/161glXp0hZGt71x3bxiY-7zGK9MuHS97b/view?usp=sharing), where I describe my
   project and some challenges I faced while building it.
 
-## Links
+## GitHub repositories
 
-- GitHub repository: [se_project_react](https://github.com/samanthaparas/se_project_react)
+- [Frontend WTWR Project](https://github.com/samanthaparas/se_project_react)
+- [Backend WTWR Project](https://github.com/samanthaparas/se_project_express.git)
 
 ## Running the Project Locally
 
