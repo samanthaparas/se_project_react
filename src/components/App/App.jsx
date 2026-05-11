@@ -1,6 +1,13 @@
+// React imports
+import { useEffect, useState } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
+
+// Contexts and hooks
 import CurrentUserContext from "../../contexts/CurrentUserContext";
-import { signup, signin, checkToken } from "../../utils/auth";
-import EditProfileModal from "../EditProfileModal/EditProfileModal";
+import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
+import useGeolocation from "../../hooks/useGeolocation";
+
+// Utils/API
 import {
   getItems,
   addItem,
@@ -9,24 +16,25 @@ import {
   addCardLike,
   removeCardLike,
 } from "../../utils/api";
-import RegisterModal from "../RegisterModal/RegisterModal";
-import LoginModal from "../LoginModal/LoginModal";
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
-
-import { useEffect, useState } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
-import "./App.css";
+import { signup, signin, checkToken } from "../../utils/auth";
 import { apiKey, getDefaultCoordinates } from "../../utils/constants";
+import { getWeather, filterWeatherData } from "../../utils/weatherApi";
+
+// Components
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import ItemModal from "../ItemModal/ItemModal";
 import Profile from "../Profile/Profile";
-import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import Footer from "../Footer/Footer";
-import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
-import useGeolocation from "../../hooks/useGeolocation";
+import EditProfileModal from "../EditProfileModal/EditProfileModal";
+import RegisterModal from "../RegisterModal/RegisterModal";
+import LoginModal from "../LoginModal/LoginModal";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+
+// Styles
+import "./App.css";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -267,12 +275,14 @@ function App() {
             isOpen={activeModal === "register"}
             onClose={closeActiveModal}
             onRegister={handleRegister}
+            onLoginClick={handleLoginClick}
           />
 
           <LoginModal
             isOpen={activeModal === "login"}
             onClose={closeActiveModal}
             onLogin={handleLogin}
+            onRegisterClick={handleRegisterClick}
           />
 
           <ItemModal

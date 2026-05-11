@@ -10,6 +10,8 @@ function ModalWithForm({
   children,
   onSubmit,
   isSubmitDisabled = false,
+  alternateButtonText,
+  onAlternateButtonClick,
 }) {
   return (
     <div
@@ -27,13 +29,25 @@ function ModalWithForm({
 
         <form onSubmit={onSubmit} className="modal__form" name={name}>
           {children}
-          <button
-            type="submit"
-            className="modal__submit"
-            disabled={isSubmitDisabled}
-          >
-            {buttonText}
-          </button>
+          <div className="modal__actions">
+            <button
+              type="submit"
+              className="modal__submit"
+              disabled={isSubmitDisabled}
+            >
+              {buttonText}
+            </button>
+
+            {alternateButtonText && (
+              <button
+                type="button"
+                className="modal__alternate-button"
+                onClick={onAlternateButtonClick}
+              >
+                {alternateButtonText}
+              </button>
+            )}
+          </div>
         </form>
       </div>
     </div>

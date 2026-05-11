@@ -127,7 +127,6 @@
   width: 124px;
   line-height: 20px;
   font-weight: 700;
-  margin-top: 24px;
   padding: 0;
   border-radius: 4px;
   border: none;
@@ -139,4 +138,23 @@
 .modal__submit:disabled {
   background-color: #bdbdbd;
   cursor: not-allowed;
+}
+
+.modal__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.modal__alternate-button {
+  border: none;
+  padding: 0;
+  background: transparent;
+  color: #00000080;
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+  cursor: pointer;
 }
