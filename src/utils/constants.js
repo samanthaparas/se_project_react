@@ -1,3 +1,8 @@
+export const baseUrl =
+  import.meta.env.PROD
+    ? "https://api.whattoweartoday.serverpit.com"
+    : "http://localhost:3001";
+
 export const weatherOptions = [
   {
     day: true,

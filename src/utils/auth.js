@@ -1,6 +1,6 @@
 import { checkResponse, headers } from "./api";
 
-const baseUrl = "http://localhost:3001";
+import { baseUrl } from "./constants";
 
 export const signup = ({ name, avatar, email, password }) => {
   return fetch(`${baseUrl}/signup`, {
