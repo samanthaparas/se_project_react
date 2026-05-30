@@ -156,7 +156,6 @@ function App() {
   const closeActiveModal = () => setActiveModal("");
 
   const { coordinates, isLoading } = useGeolocation();
-  const activeCoordinates = coordinates || getDefaultCoordinates();
 
   useEffect(() => {
     getItems()
@@ -210,13 +209,15 @@ function App() {
       return;
     }
 
+    const activeCoordinates = coordinates || getDefaultCoordinates();
+
     getWeather(activeCoordinates, apiKey)
       .then((data) => {
         const filteredData = filterWeatherData(data);
         setWeatherData(filteredData);
       })
       .catch(console.error);
-  }, [isLoading]);
+  }, [coordinates, isLoading]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

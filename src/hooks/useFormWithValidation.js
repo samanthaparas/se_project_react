@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 const validationRules = {
   name: (value) => {
     if (!value.trim()) return "Name is required";
-    if (value.length < 1) return "Name must be at least 1 character";
+    if (value.length < 2) return "Name must be at least 2 characters";
     if (value.length > 30) return "Name must be no more than 30 characters";
     return "";
   },
